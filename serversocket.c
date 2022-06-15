@@ -52,14 +52,22 @@ int main(){
        
       else if (pid == 0) {
         printf("%d\n", getpid()) ;
-        char *buffer = (char*) calloc(buffersize, sizeof(char));
+        //char *buffer = (char*) calloc(buffersize, sizeof(char));
+        int *buffer = (int*) calloc(buffersize, sizeof(int));
         recv(clnt_sock, buffer, buffersize, 0) ;
-        printf("Server receive:%s\n", buffer) ;
-        int total = (int)(atoi(buffer)*atoi(buffer)) ;
-        printf("Server return num^2:%d\n", total) ;
-        char *returnvalue = (char*) calloc(buffersize, sizeof(char));
-        sprintf( returnvalue, "result:%d", total ) ;
-        send(clnt_sock, returnvalue, buffersize, 0) ;
+        //printf("Server receive:%s\n", buffer) ;
+        printf("Server receive:%d\n", *buffer) ;
+
+        //int total = (int)(atoi(buffer)*atoi(buffer)) ;
+        uint64_t PCR_VALUE = 0x00;
+
+        printf("Server return num^2:%lu\n", PCR_VALUE) ;
+
+        //uint64_t *returnvalue = (uint64_t*) calloc(1, sizeof(uint64_t));
+        //char *returnvalue = (char*) calloc(buffersize, sizeof(char));
+        //sprintf(returnvalue, "%lu", PCR_VALUE ) ;
+        //send(clnt_sock, returnvalue, buffersize, 0) ;
+        send(clnt_sock, &PCR_VALUE, 1, 0) ;
         close(clnt_sock) ;
         close(serv_sock) ;
         return 0 ;
